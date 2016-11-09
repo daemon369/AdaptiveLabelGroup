@@ -3,7 +3,7 @@
 
     <declare-styleable name="AdaptiveLabelGroup">
 
-        <!-- 标签重心 -->
+        <!-- 容器重力方向 -->
         <attr name="gravity" format="dimension" />
 
         <!-- 标签水平分隔距离 -->

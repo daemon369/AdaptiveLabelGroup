@@ -8,12 +8,12 @@
     <me.daemon.AdaptiveLabelGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4bd144">
+        android:background="#4bd144"
+        android:padding="20dp">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:layout_margin="5dp"
             android:background="@drawable/bg_label"
             android:text="testtestjusttestt....." />
 
@@ -55,7 +55,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_margin="5dp"
             android:background="@drawable/bg_label"
             android:text="...............fijeojfijifjeijjfiejefiifjeijfiejijfeijfieifeijf..." />
 

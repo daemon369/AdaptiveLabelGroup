@@ -115,9 +115,9 @@ public class AdaptiveLabelGroup extends ViewGroup {
         final int count = getChildCount();
 
         // 一行View总宽度
-        int width = 0;
+        int width = getPaddingLeft() + getPaddingRight();
         // 当前总高度
-        int totalHeight = 0;
+        int totalHeight = getPaddingTop() + getPaddingBottom();
         // 当前行高度，以该行View中高度最高的为准
         int rowHeight = 0;
 
@@ -137,7 +137,7 @@ public class AdaptiveLabelGroup extends ViewGroup {
                         // 总宽度超过容器宽度，总高度加上加上当前行高度，换行，清空行高、行宽
                         totalHeight += rowHeight;
                         rowHeight = 0;
-                        width = 0;
+                        width = getPaddingLeft() + getPaddingRight();
                     }
 
                     // 行宽加上当前View宽度及左右margin
@@ -159,8 +159,8 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        int width = 0;
-        int totalHeight = 0;
+        int width = getPaddingLeft();
+        int totalHeight = getPaddingTop();
         int rowHeight = 0;
 
         final int measuredWidth = getMeasuredWidth();
@@ -174,10 +174,10 @@ public class AdaptiveLabelGroup extends ViewGroup {
             final int childW = v.getMeasuredWidth();
             final int childH = v.getMeasuredHeight();
 
-            if (width + childW + lp.leftMargin + lp.rightMargin > measuredWidth) {
+            if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
                 totalHeight += rowHeight;
                 rowHeight = 0;
-                width = 0;
+                width = getPaddingLeft();
             }
 
             v.layout(width + lp.leftMargin, totalHeight + lp.topMargin, width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
