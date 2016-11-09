@@ -1,4 +1,4 @@
-package me.daemon.library;
+package me.daemon;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,6 +7,8 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+
+import me.daemon.library.R;
 
 /**
  * 自适应标签容器<br/>
