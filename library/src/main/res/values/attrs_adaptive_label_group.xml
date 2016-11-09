@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="AdaptiveLabelGroup">
+
+        <!-- 标签重心 -->
+        <attr name="gravity" format="dimension" />
+
+        <!-- 标签水平分隔距离 -->
+        <attr name="horizontal_divider_size" format="dimension" />
+
+        <!-- 标签垂直分隔距离 -->
+        <attr name="vertical_divider_size" format="dimension" />
+
+    </declare-styleable>
+
+</resources>
