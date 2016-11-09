@@ -25,7 +25,7 @@ allprojects {
 
 ```
 dependencies {
-    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.1'
+    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.2'
 }
 ```
 ## 2. 布局文件中引用：
@@ -38,17 +38,30 @@ dependencies {
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <me.daemon.library.AdaptiveLabelGroup
+    <me.daemon.AdaptiveLabelGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffff0000">
+        android:background="#4bd144"
+        android:padding="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
             android:background="@drawable/bg_label"
-            android:text="tesfaeafewfawfafleawlfelaflalllt" />
+            android:text="testtestjusttestt....." />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_label"
+            android:text="测试测试测试" />
+
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_label"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,10 +81,16 @@ dependencies {
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="6dp"
             android:background="@drawable/bg_label"
             android:text="##" />
 
-    </me.daemon.library.AdaptiveLabelGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_label"
+            android:text="...............fijeojfijifjeijjfiejefiifjeijfiejijfeijfieifeijf..." />
+
+    </me.daemon.AdaptiveLabelGroup>
 </RelativeLayout>
 ```
