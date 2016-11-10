@@ -17,7 +17,7 @@ import me.daemon.library.R;
 public class AdaptiveLabelGroup extends ViewGroup {
 
     /**
-     * 水平间距 TODO
+     * 水平间距
      */
     private int horizontalDividerSize = 0;
 
@@ -112,14 +112,8 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
         measureChildren(widthMeasureSpec, heightMeasureSpec);
 
-        final int count = getChildCount();
-
-        // 一行View总宽度
-        int width = getPaddingLeft() + getPaddingRight();
         // 当前总高度
         int totalHeight = getPaddingTop() + getPaddingBottom();
-        // 当前行高度，以该行View中高度最高的为准
-        int rowHeight = 0;
 
         switch (heightSpecMode) {
             case MeasureSpec.EXACTLY:
@@ -127,21 +121,34 @@ public class AdaptiveLabelGroup extends ViewGroup {
                 break;
 
             default:
+                final int count = getChildCount();
+
+                // 一行View总宽度
+                int width = getPaddingLeft() + getPaddingRight();
+
+                // 当前行高度，以该行View中高度最高的为准
+                int rowHeight = 0;
+
+                int column = 0;
+
                 for (int i = 0; i < count; i++) {
                     final View v = getChildAt(i);
                     final LayoutParams lp = (LayoutParams) v.getLayoutParams();
                     final int childW = v.getMeasuredWidth();
                     final int childH = v.getMeasuredHeight();
 
-                    if (width + childW + lp.leftMargin + lp.rightMargin > widthSpecSize) {
+                    if (width + column * horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin > widthSpecSize) {
                         // 总宽度超过容器宽度，总高度加上加上当前行高度，换行，清空行高、行宽
                         totalHeight += rowHeight;
                         rowHeight = 0;
                         width = getPaddingLeft() + getPaddingRight();
+                        column = 0;
                     }
 
                     // 行宽加上当前View宽度及左右margin
                     width += childW + lp.leftMargin + lp.rightMargin;
+
+                    column++;
 
                     if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
                         // 行高取当前行中View高度+上下margin最大值
@@ -151,6 +158,7 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
                 // 计算完成，总高度加上最后一行的高度
                 totalHeight += rowHeight;
+
                 break;
         }
 
@@ -163,6 +171,8 @@ public class AdaptiveLabelGroup extends ViewGroup {
         int totalHeight = getPaddingTop();
         int rowHeight = 0;
 
+        int column = 0;
+
         final int measuredWidth = getMeasuredWidth();
         final int measuredHeight = getMeasuredHeight();
 
@@ -174,13 +184,17 @@ public class AdaptiveLabelGroup extends ViewGroup {
             final int childW = v.getMeasuredWidth();
             final int childH = v.getMeasuredHeight();
 
-            if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
+            if (width + column * horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
                 totalHeight += rowHeight;
                 rowHeight = 0;
                 width = getPaddingLeft();
+                column = 0;
             }
 
-            v.layout(width + lp.leftMargin, totalHeight + lp.topMargin, width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
+            v.layout(width + column * horizontalDividerSize + lp.leftMargin, totalHeight + lp.topMargin,
+                    width + column * horizontalDividerSize + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
+
+            column++;
 
             width += childW + lp.leftMargin + lp.rightMargin;
 
