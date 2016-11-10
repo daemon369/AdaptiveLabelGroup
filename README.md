@@ -1,5 +1,6 @@
 # AdaptiveLabelGroup
-自适应标签容器，标签自动换行
+
+自适应标签容器，支持标签自动换行，支持设置标签水平间距、垂直间距
 
 ----
 
@@ -25,15 +26,16 @@ allprojects {
 
 ```
 dependencies {
-    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.2'
+    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.3'
 }
 ```
 ## 2. 布局文件中引用：
 
 可以在布局中直接引用：
 ```
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
@@ -42,46 +44,49 @@ dependencies {
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#4bd144"
-        android:padding="20dp">
+        android:padding="5dp"
+        tools:horizontal_divider_size="5dp"
+        tools:vertical_divider_size="5dp">
 
         <TextView
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
             android:background="@drawable/bg_label"
-            android:text="testtestjusttestt....." />
+            android:text="testtestjustt...." />
 
         <Button
-            android:layout_width="200dp"
+            android:layout_width="90dp"
             android:layout_height="50dp"
-            android:layout_margin="10dp"
             android:background="@drawable/bg_label"
             android:text="测试测试测试" />
 
         <ImageView
-            android:layout_width="400dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_label"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_label"
+            android:text="falefffffffeaf" />
+
+        <ImageView
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/bg_label"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_label"
-            android:text="falefffffffffflawleaf" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:layout_margin="5dp"
             android:background="@drawable/bg_label"
             android:text="............................................" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="6dp"
             android:background="@drawable/bg_label"
             android:text="##" />
 
@@ -92,5 +97,5 @@ dependencies {
             android:text="...............fijeojfijifjeijjfiejefiifjeijfiejijfeijfieifeijf..." />
 
     </me.daemon.AdaptiveLabelGroup>
-</RelativeLayout>
+</FrameLayout>
 ```
