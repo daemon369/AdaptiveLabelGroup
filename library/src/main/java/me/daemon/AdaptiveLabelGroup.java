@@ -52,20 +52,22 @@ public class AdaptiveLabelGroup extends ViewGroup {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        final TypedArray a = context.obtainStyledAttributes(
-                attrs, R.styleable.AdaptiveLabelGroup, defStyleAttr, defStyleRes);
+        if(null != attrs) {
+            final TypedArray a = context.obtainStyledAttributes(
+                    attrs, R.styleable.AdaptiveLabelGroup, defStyleAttr, defStyleRes);
 
-        final int hDividerSize = a.getDimensionPixelSize(R.styleable.AdaptiveLabelGroup_horizontal_divider_size, 0);
-        if (hDividerSize != 0) {
-            setHorizontalDividerSize(hDividerSize);
+            final int hDividerSize = a.getDimensionPixelSize(R.styleable.AdaptiveLabelGroup_horizontal_divider_size, 0);
+            if (hDividerSize != 0) {
+                setHorizontalDividerSize(hDividerSize);
+            }
+
+            final int vDividerSize = a.getDimensionPixelSize(R.styleable.AdaptiveLabelGroup_vertical_divider_size, 0);
+            if (vDividerSize != 0) {
+                setVerticalDividerSize(vDividerSize);
+            }
+
+            a.recycle();
         }
-
-        final int vDividerSize = a.getDimensionPixelSize(R.styleable.AdaptiveLabelGroup_vertical_divider_size, 0);
-        if (vDividerSize != 0) {
-            setVerticalDividerSize(vDividerSize);
-        }
-
-        a.recycle();
     }
 
     public void setHorizontalDividerSize(final int horizontalDividerSize) {
