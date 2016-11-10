@@ -22,7 +22,7 @@ public class AdaptiveLabelGroup extends ViewGroup {
     private int horizontalDividerSize = 0;
 
     /**
-     * 垂直间距 TODO
+     * 垂直间距
      */
     private int verticalDividerSize = 0;
 
@@ -104,7 +104,6 @@ public class AdaptiveLabelGroup extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        final int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         final int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
 
         final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -113,53 +112,49 @@ public class AdaptiveLabelGroup extends ViewGroup {
         measureChildren(widthMeasureSpec, heightMeasureSpec);
 
         // 当前总高度
-        int totalHeight = getPaddingTop() + getPaddingBottom();
+        int totalHeight;
 
-        switch (heightSpecMode) {
-            case MeasureSpec.EXACTLY:
-                totalHeight = heightSpecSize;
-                break;
+        if (MeasureSpec.EXACTLY == heightSpecMode) {
+            totalHeight = heightSpecSize;
+        } else {
+            final int count = getChildCount();
 
-            default:
-                final int count = getChildCount();
+            // 一行View总宽度，初始为容器左padding
+            int width = getPaddingLeft();
 
-                // 一行View总宽度
-                int width = getPaddingLeft() + getPaddingRight();
+            // 当前行高度，以该行View中高度最高的为准
+            int rowHeight = 0;
 
-                // 当前行高度，以该行View中高度最高的为准
-                int rowHeight = 0;
+            // 总高度初始加上容器顶部padding
+            totalHeight = getPaddingTop();
 
-                int column = 0;
+            for (int i = 0; i < count; i++) {
+                final View v = getChildAt(i);
+                final LayoutParams lp = (LayoutParams) v.getLayoutParams();
+                final int childW = v.getMeasuredWidth();
+                final int childH = v.getMeasuredHeight();
 
-                for (int i = 0; i < count; i++) {
-                    final View v = getChildAt(i);
-                    final LayoutParams lp = (LayoutParams) v.getLayoutParams();
-                    final int childW = v.getMeasuredWidth();
-                    final int childH = v.getMeasuredHeight();
-
-                    if (width + column * horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin > widthSpecSize) {
-                        // 总宽度超过容器宽度，总高度加上加上当前行高度，换行，清空行高、行宽
-                        totalHeight += rowHeight;
-                        rowHeight = 0;
-                        width = getPaddingLeft() + getPaddingRight();
-                        column = 0;
-                    }
-
-                    // 行宽加上当前View宽度及左右margin
-                    width += childW + lp.leftMargin + lp.rightMargin;
-
-                    column++;
-
-                    if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
-                        // 行高取当前行中View高度+上下margin最大值
-                        rowHeight = childH + lp.topMargin + lp.bottomMargin;
-                    }
+                if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > widthSpecSize) {
+                    // 总宽度超过容器宽度，总高度加上垂直间距及当前行高度，换行，重置行高、行宽
+                    totalHeight += verticalDividerSize + rowHeight;
+                    rowHeight = 0;
+                    width = getPaddingLeft();
                 }
 
-                // 计算完成，总高度加上最后一行的高度
-                totalHeight += rowHeight;
+                // 行宽加上垂直间距、当前View宽度及左右margin
+                width += horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin;
 
-                break;
+                if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
+                    // 行高取当前行中View高度+上下margin最大值
+                    rowHeight = childH + lp.topMargin + lp.bottomMargin;
+                }
+            }
+
+            // 计算完成，总高度加上最后一行的高度
+            totalHeight += rowHeight;
+
+            // 总高度加上容器底部padding
+            totalHeight += getPaddingBottom();
         }
 
         setMeasuredDimension(widthSpecSize, totalHeight);
@@ -167,16 +162,15 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        final int count = getChildCount();
+
         int width = getPaddingLeft();
-        int totalHeight = getPaddingTop();
+
         int rowHeight = 0;
 
-        int column = 0;
+        int totalHeight = getPaddingTop();
 
         final int measuredWidth = getMeasuredWidth();
-        final int measuredHeight = getMeasuredHeight();
-
-        final int count = getChildCount();
 
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
@@ -184,19 +178,16 @@ public class AdaptiveLabelGroup extends ViewGroup {
             final int childW = v.getMeasuredWidth();
             final int childH = v.getMeasuredHeight();
 
-            if (width + column * horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
-                totalHeight += rowHeight;
+            if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
+                totalHeight += verticalDividerSize + rowHeight;
                 rowHeight = 0;
                 width = getPaddingLeft();
-                column = 0;
             }
 
-            v.layout(width + column * horizontalDividerSize + lp.leftMargin, totalHeight + lp.topMargin,
-                    width + column * horizontalDividerSize + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
+            v.layout(width + lp.leftMargin, totalHeight + lp.topMargin,
+                    width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
 
-            column++;
-
-            width += childW + lp.leftMargin + lp.rightMargin;
+            width += horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin;
 
             if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
                 rowHeight = childH + lp.topMargin + lp.bottomMargin;
