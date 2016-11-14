@@ -26,7 +26,7 @@ allprojects {
 
 ```
 dependencies {
-    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.3'
+    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.4'
 }
 ```
 ## 2. 布局文件中引用：
@@ -55,7 +55,7 @@ dependencies {
             android:text="testtestjustt...." />
 
         <Button
-            android:layout_width="90dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_label"
             android:text="测试测试测试" />
@@ -64,7 +64,8 @@ dependencies {
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/bg_label"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="90dp"
@@ -76,25 +77,14 @@ dependencies {
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/bg_label"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:background="@drawable/bg_label"
             android:text="............................................" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_label"
-            android:text="##" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_label"
-            android:text="...............fijeojfijifjeijjfiejefiifjeijfiejijfeijfieifeijf..." />
 
     </me.daemon.AdaptiveLabelGroup>
 </FrameLayout>
