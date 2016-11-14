@@ -6,12 +6,13 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
 
 import me.daemon.library.R;
 
 /**
- * 自适应标签容器<br/>
+ * 自适应标签容器
  * Created by daemon on 2016/11/8.
  */
 public class AdaptiveLabelGroup extends ViewGroup {
@@ -19,11 +20,13 @@ public class AdaptiveLabelGroup extends ViewGroup {
     /**
      * 水平间距
      */
+    @ViewDebug.ExportedProperty(category = "layout")
     private int horizontalDividerSize = 0;
 
     /**
      * 垂直间距
      */
+    @ViewDebug.ExportedProperty(category = "layout")
     private int verticalDividerSize = 0;
 
     public AdaptiveLabelGroup(Context context) {
@@ -52,7 +55,7 @@ public class AdaptiveLabelGroup extends ViewGroup {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        if(null != attrs) {
+        if (null != attrs) {
             final TypedArray a = context.obtainStyledAttributes(
                     attrs, R.styleable.AdaptiveLabelGroup, defStyleAttr, defStyleRes);
 
@@ -105,13 +108,19 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final int count = getChildCount();
 
         final int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
 
         final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         final int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        for (int i = 0; i < count; ++i) {
+            final View v = getChildAt(i);
+            if (v.getVisibility() != GONE) {
+                measureChildWithMargins(v, widthMeasureSpec, 0, heightMeasureSpec, 0);
+            }
+        }
 
         // 当前总高度
         int totalHeight;
@@ -119,7 +128,6 @@ public class AdaptiveLabelGroup extends ViewGroup {
         if (MeasureSpec.EXACTLY == heightSpecMode) {
             totalHeight = heightSpecSize;
         } else {
-            final int count = getChildCount();
 
             // 一行View总宽度，初始为容器左padding
             int width = getPaddingLeft();
@@ -132,23 +140,26 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
             for (int i = 0; i < count; i++) {
                 final View v = getChildAt(i);
-                final LayoutParams lp = (LayoutParams) v.getLayoutParams();
-                final int childW = v.getMeasuredWidth();
-                final int childH = v.getMeasuredHeight();
 
-                if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > widthSpecSize) {
-                    // 总宽度超过容器宽度，总高度加上垂直间距及当前行高度，换行，重置行高、行宽
-                    totalHeight += verticalDividerSize + rowHeight;
-                    rowHeight = 0;
-                    width = getPaddingLeft();
-                }
+                if (v.getVisibility() != GONE) {
+                    final LayoutParams lp = (LayoutParams) v.getLayoutParams();
+                    final int childW = v.getMeasuredWidth();
+                    final int childH = v.getMeasuredHeight();
 
-                // 行宽加上垂直间距、当前View宽度及左右margin
-                width += horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin;
+                    if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > widthSpecSize) {
+                        // 总宽度超过容器宽度，总高度加上垂直间距及当前行高度，换行，重置行高、行宽
+                        totalHeight += verticalDividerSize + rowHeight;
+                        rowHeight = 0;
+                        width = getPaddingLeft();
+                    }
 
-                if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
-                    // 行高取当前行中View高度+上下margin最大值
-                    rowHeight = childH + lp.topMargin + lp.bottomMargin;
+                    // 行宽加上垂直间距、当前View宽度及左右margin
+                    width += horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin;
+
+                    if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
+                        // 行高取当前行中View高度+上下margin最大值
+                        rowHeight = childH + lp.topMargin + lp.bottomMargin;
+                    }
                 }
             }
 
@@ -176,23 +187,26 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
-            final LayoutParams lp = (LayoutParams) v.getLayoutParams();
-            final int childW = v.getMeasuredWidth();
-            final int childH = v.getMeasuredHeight();
 
-            if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
-                totalHeight += verticalDividerSize + rowHeight;
-                rowHeight = 0;
-                width = getPaddingLeft();
-            }
+            if (v.getVisibility() != GONE) {
+                final LayoutParams lp = (LayoutParams) v.getLayoutParams();
+                final int childW = v.getMeasuredWidth();
+                final int childH = v.getMeasuredHeight();
 
-            v.layout(width + lp.leftMargin, totalHeight + lp.topMargin,
-                    width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
+                if (width + childW + lp.leftMargin + lp.rightMargin + getPaddingRight() > measuredWidth) {
+                    totalHeight += verticalDividerSize + rowHeight;
+                    rowHeight = 0;
+                    width = getPaddingLeft();
+                }
 
-            width += horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin;
+                v.layout(width + lp.leftMargin, totalHeight + lp.topMargin,
+                        width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH);
 
-            if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
-                rowHeight = childH + lp.topMargin + lp.bottomMargin;
+                width += horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin;
+
+                if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
+                    rowHeight = childH + lp.topMargin + lp.bottomMargin;
+                }
             }
         }
     }
