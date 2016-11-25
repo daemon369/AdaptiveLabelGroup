@@ -12,6 +12,9 @@
         <!-- 标签垂直分隔距离 -->
         <attr name="vertical_divider_size" format="dimension" />
 
+        <!-- 最大行数，非负整数，默认为0不限制行数 -->
+        <attr name="max_rows" format="integer" />
+
     </declare-styleable>
 
 </resources>

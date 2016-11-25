@@ -12,6 +12,7 @@
         android:background="#4bd144"
         android:padding="5dp"
         tools:horizontal_divider_size="5dp"
+        tools:max_rows="1"
         tools:vertical_divider_size="5dp">
 
         <TextView
@@ -21,7 +22,7 @@
             android:text="testtestjustt...." />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/bg_label"
             android:text="测试测试测试" />

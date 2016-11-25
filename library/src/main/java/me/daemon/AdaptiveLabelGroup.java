@@ -29,6 +29,12 @@ public class AdaptiveLabelGroup extends ViewGroup {
     @ViewDebug.ExportedProperty(category = "layout")
     private int verticalDividerSize = 0;
 
+    /**
+     * 最大行数，默认为0不限制行数
+     */
+    @ViewDebug.ExportedProperty(category = "layout")
+    private int maxRows = 0;
+
     public AdaptiveLabelGroup(Context context) {
         super(context);
 
@@ -69,20 +75,56 @@ public class AdaptiveLabelGroup extends ViewGroup {
                 setVerticalDividerSize(vDividerSize);
             }
 
+            final int maxRows = a.getInt(R.styleable.AdaptiveLabelGroup_max_rows, 0);
+            if (maxRows != 0) {
+                setMaxRows(maxRows);
+            }
+
             a.recycle();
         }
     }
 
+    /**
+     * 设置水平间距
+     *
+     * @param horizontalDividerSize 水平间距
+     */
     public void setHorizontalDividerSize(final int horizontalDividerSize) {
-        this.horizontalDividerSize = horizontalDividerSize;
-        requestLayout();
-        invalidate();
+        if (this.horizontalDividerSize != horizontalDividerSize) {
+            this.horizontalDividerSize = horizontalDividerSize;
+            requestLayout();
+            invalidate();
+        }
     }
 
+    /**
+     * 设置垂直间距
+     *
+     * @param verticalDividerSize 垂直间距
+     */
     public void setVerticalDividerSize(final int verticalDividerSize) {
-        this.verticalDividerSize = verticalDividerSize;
-        requestLayout();
-        invalidate();
+        if (this.verticalDividerSize != verticalDividerSize) {
+            this.verticalDividerSize = verticalDividerSize;
+            requestLayout();
+            invalidate();
+        }
+    }
+
+    /**
+     * 设置最大行数
+     *
+     * @param maxRows 最大行数，默认为0，为0不限制行数
+     */
+    public void setMaxRows(final int maxRows) {
+        if (maxRows < 0) {
+            throw new IllegalArgumentException("maxRows can't be negative");
+        }
+
+        if (this.maxRows != maxRows) {
+            this.maxRows = maxRows;
+            requestLayout();
+            invalidate();
+        }
     }
 
     @Override
@@ -138,6 +180,9 @@ public class AdaptiveLabelGroup extends ViewGroup {
             // 总高度初始加上容器顶部padding
             totalHeight = getPaddingTop();
 
+            // 行数
+            int row = 0;
+
             for (int i = 0; i < count; i++) {
                 final View v = getChildAt(i);
 
@@ -151,6 +196,12 @@ public class AdaptiveLabelGroup extends ViewGroup {
                         totalHeight += verticalDividerSize + rowHeight;
                         rowHeight = 0;
                         width = getPaddingLeft();
+                        row++;
+
+                        if (maxRows > 0 && row == maxRows) {
+                            // 最大行数非0时，超过最大行数不显示
+                            break;
+                        }
                     }
 
                     // 行宽加上垂直间距、当前View宽度及左右margin
@@ -185,6 +236,8 @@ public class AdaptiveLabelGroup extends ViewGroup {
 
         final int measuredWidth = getMeasuredWidth();
 
+        int row = 0;
+
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
 
@@ -197,6 +250,11 @@ public class AdaptiveLabelGroup extends ViewGroup {
                     totalHeight += verticalDividerSize + rowHeight;
                     rowHeight = 0;
                     width = getPaddingLeft();
+                    row++;
+
+                    if (maxRows > 0 && row == maxRows) {
+                        break;
+                    }
                 }
 
                 v.layout(width + lp.leftMargin, totalHeight + lp.topMargin,
