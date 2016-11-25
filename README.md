@@ -1,6 +1,6 @@
 # AdaptiveLabelGroup
 
-自适应标签容器，支持标签自动换行，支持设置标签水平间距、垂直间距
+自适应标签容器，支持标签自动换行，支持设置标签水平间距、垂直间距，支持设置最大行数
 
 ----
 
@@ -26,7 +26,7 @@ allprojects {
 
 ```
 dependencies {
-    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.4'
+    compile 'com.github.daemon369:AdaptiveLabelGroup:v0.0.5'
 }
 ```
 ## 2. 布局文件中引用：
@@ -46,6 +46,7 @@ dependencies {
         android:background="#4bd144"
         android:padding="5dp"
         tools:horizontal_divider_size="5dp"
+        tools:max_rows="1"
         tools:vertical_divider_size="5dp">
 
         <TextView
@@ -55,7 +56,7 @@ dependencies {
             android:text="testtestjustt...." />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/bg_label"
             android:text="测试测试测试" />
