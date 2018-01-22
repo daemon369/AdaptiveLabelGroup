@@ -97,6 +97,10 @@ public class AdaptiveLabelGroup extends ViewGroup {
         }
     }
 
+    public int getHorizontalDividerSize() {
+        return horizontalDividerSize;
+    }
+
     /**
      * 设置垂直间距
      *
@@ -108,6 +112,10 @@ public class AdaptiveLabelGroup extends ViewGroup {
             requestLayout();
             invalidate();
         }
+    }
+
+    public int getVerticalDividerSize() {
+        return verticalDividerSize;
     }
 
     /**
@@ -125,6 +133,10 @@ public class AdaptiveLabelGroup extends ViewGroup {
             requestLayout();
             invalidate();
         }
+    }
+
+    public int getMaxRows() {
+        return maxRows;
     }
 
     @Override
