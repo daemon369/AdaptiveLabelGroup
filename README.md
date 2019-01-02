@@ -26,7 +26,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.daemon369:AdaptiveLabelGroup:v0.0.6@aar'
+    implementation 'com.github.daemon369:AdaptiveLabelGroup:v0.0.7'
 }
 ```
 ## 2. 布局文件中引用：
