@@ -18,7 +18,7 @@
 allprojects {
     repositories {
         ...
-        maven { url "https://jitpack.io" }
+        jcenter()
     }
 }
 ```
@@ -26,7 +26,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.daemon369:AdaptiveLabelGroup:v0.0.7'
+    implementation 'me.daemon:adaptivelabelgroup:0.0.8'
 }
 ```
 ## 2. 布局文件中引用：
