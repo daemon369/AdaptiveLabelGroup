@@ -40,7 +40,7 @@ dependencies {
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <me.daemon.AdaptiveLabelGroup
+    <me.daemon.adaptivelabel.AdaptiveLabelGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#4bd144"
@@ -87,6 +87,6 @@ dependencies {
             android:background="@drawable/bg_label"
             android:text="............................................" />
 
-    </me.daemon.AdaptiveLabelGroup>
+    </me.daemon.adaptivelabel.AdaptiveLabelGroup>
 </FrameLayout>
 ```
