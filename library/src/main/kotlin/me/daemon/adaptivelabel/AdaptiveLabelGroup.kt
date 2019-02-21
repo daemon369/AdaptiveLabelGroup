@@ -27,7 +27,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
     /**
      * 水平间距
      */
-    @ViewDebug.ExportedProperty(category = "layout")
+    @ViewDebug.ExportedProperty(category = "daemon")
     var horizontalDividerSize = 0
         /**
          * 设置水平间距
@@ -45,7 +45,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
     /**
      * 垂直间距
      */
-    @ViewDebug.ExportedProperty(category = "layout")
+    @ViewDebug.ExportedProperty(category = "daemon")
     var verticalDividerSize = 0
         /**
          * 设置垂直间距
@@ -63,7 +63,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
     /**
      * 最大行数，默认为0不限制行数
      */
-    @ViewDebug.ExportedProperty(category = "layout")
+    @ViewDebug.ExportedProperty(category = "daemon")
     var maxRows = 0
         /**
          * 设置最大行数
