@@ -13,6 +13,10 @@ import me.daemon.library.R
 /**
  * 自适应标签容器
  *
+ * [Github](https://github.com/daemon369/AdaptiveLabelGroup)
+ *
+ * [jcenter](https://bintray.com/beta/#/daemon336699/maven/adaptivelabelgroup?tab=overview)
+ *
  * @author daemon
  * @since 2016-11-08 00:00
  */
