@@ -2,6 +2,9 @@
 
 自适应标签容器，支持标签自动换行，支持设置标签水平间距、垂直间距，支持设置最大行数
 
+
+ [ ![Download](https://api.bintray.com/packages/daemon336699/maven/adaptivelabelgroup/images/download.svg) ](https://bintray.com/daemon336699/maven/adaptivelabelgroup/_latestVersion)
+
 ----
 
 # 效果
