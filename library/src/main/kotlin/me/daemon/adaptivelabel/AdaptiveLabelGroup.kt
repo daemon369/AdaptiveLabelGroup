@@ -75,9 +75,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
          * @param maxRows 最大行数，默认为0，为0不限制行数
          */
         set(maxRows) {
-            if (maxRows < 0) {
-                throw IllegalArgumentException("maxRows can't be negative")
-            }
+            require(maxRows >= 0) { "maxRows can't be negative" }
 
             if (field != maxRows) {
                 field = maxRows
@@ -105,7 +103,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
 
     override fun generateLayoutParams(lp: ViewGroup.LayoutParams): ViewGroup.LayoutParams {
         return (lp as? LayoutParams)?.let { LayoutParams(it) }
-                ?: ((lp as? ViewGroup.MarginLayoutParams)?.let { LayoutParams(it) }
+                ?: ((lp as? MarginLayoutParams)?.let { LayoutParams(it) }
                         ?: LayoutParams(lp))
     }
 
@@ -116,10 +114,10 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val count = childCount
 
-        val widthSpecSize = View.MeasureSpec.getSize(widthMeasureSpec)
+        val widthSpecSize = MeasureSpec.getSize(widthMeasureSpec)
 
-        val heightSpecMode = View.MeasureSpec.getMode(heightMeasureSpec)
-        val heightSpecSize = View.MeasureSpec.getSize(heightMeasureSpec)
+        val heightSpecMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSpecSize = MeasureSpec.getSize(heightMeasureSpec)
 
         for (i in 0 until count) {
             val v = getChildAt(i)
@@ -131,7 +129,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
         // 当前总高度
         var totalHeight: Int
 
-        if (View.MeasureSpec.EXACTLY == heightSpecMode) {
+        if (MeasureSpec.EXACTLY == heightSpecMode) {
             totalHeight = heightSpecSize
         } else {
 
@@ -232,7 +230,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
         }
     }
 
-    class LayoutParams : ViewGroup.MarginLayoutParams {
+    class LayoutParams : MarginLayoutParams {
 
         constructor(c: Context, attrs: AttributeSet) : super(c, attrs)
 
@@ -240,7 +238,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
 
         constructor(p: ViewGroup.LayoutParams) : super(p)
 
-        constructor(source: ViewGroup.MarginLayoutParams) : super(source)
+        constructor(source: MarginLayoutParams) : super(source)
 
         constructor(source: LayoutParams) : super(source)
     }
