@@ -97,18 +97,16 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
         }
     }
 
-    override fun generateLayoutParams(attrs: AttributeSet): ViewGroup.LayoutParams {
-        return LayoutParams(context, attrs)
+    override fun generateLayoutParams(attrs: AttributeSet): MarginLayoutParams {
+        return MarginLayoutParams(context, attrs)
     }
 
-    override fun generateLayoutParams(lp: ViewGroup.LayoutParams): ViewGroup.LayoutParams {
-        return (lp as? LayoutParams)?.let { LayoutParams(it) }
-                ?: ((lp as? MarginLayoutParams)?.let { LayoutParams(it) }
-                        ?: LayoutParams(lp))
+    override fun generateLayoutParams(lp: LayoutParams): MarginLayoutParams {
+        return (lp as? MarginLayoutParams)?.let { MarginLayoutParams(it) } ?: MarginLayoutParams(lp)
     }
 
-    override fun generateDefaultLayoutParams(): ViewGroup.LayoutParams {
-        return LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+    override fun generateDefaultLayoutParams(): MarginLayoutParams {
+        return MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -149,7 +147,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
                 val v = getChildAt(i)
 
                 if (v.visibility != View.GONE) {
-                    val lp = v.layoutParams as LayoutParams
+                    val lp = v.layoutParams as MarginLayoutParams
                     val childW = v.measuredWidth
                     val childH = v.measuredHeight
 
@@ -203,7 +201,7 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
             val v = getChildAt(i)
 
             if (v.visibility != View.GONE) {
-                val lp = v.layoutParams as LayoutParams
+                val lp = v.layoutParams as MarginLayoutParams
                 val childW = v.measuredWidth
                 val childH = v.measuredHeight
 
@@ -228,18 +226,5 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
                 }
             }
         }
-    }
-
-    class LayoutParams : MarginLayoutParams {
-
-        constructor(c: Context, attrs: AttributeSet) : super(c, attrs)
-
-        constructor(width: Int, height: Int) : super(width, height)
-
-        constructor(p: ViewGroup.LayoutParams) : super(p)
-
-        constructor(source: MarginLayoutParams) : super(source)
-
-        constructor(source: LayoutParams) : super(source)
     }
 }
