@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
 
     <me.daemon.adaptivelabel.AdaptiveLabelGroup
+        android:id="@+id/alg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#4bd144"
         android:padding="5dp"
-        tools:horizontal_divider_size="5dp"
-        tools:max_rows="1"
+        tools:horizontal_divider_size="10dp"
+        tools:max_rows="0"
         tools:vertical_divider_size="5dp">
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_label"
             android:src="@mipmap/ic_launcher"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:layout_width="90dp"
@@ -45,13 +45,14 @@
             android:layout_height="40dp"
             android:background="@drawable/bg_label"
             android:src="@mipmap/ic_launcher"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:background="@drawable/bg_label"
-            android:text="............................................" />
+            android:text="............................................"
+            android:textColor="@android:color/black" />
 
     </me.daemon.adaptivelabel.AdaptiveLabelGroup>
 </FrameLayout>

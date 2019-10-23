@@ -97,6 +97,10 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
         }
     }
 
+    override fun checkLayoutParams(p: LayoutParams?): Boolean {
+        return p is MarginLayoutParams
+    }
+
     override fun generateLayoutParams(attrs: AttributeSet): MarginLayoutParams {
         return MarginLayoutParams(context, attrs)
     }
@@ -200,30 +204,32 @@ class AdaptiveLabelGroup @JvmOverloads constructor(
         for (i in 0 until count) {
             val v = getChildAt(i)
 
-            if (v.visibility != View.GONE) {
-                val lp = v.layoutParams as MarginLayoutParams
-                val childW = v.measuredWidth
-                val childH = v.measuredHeight
+            if (v.visibility == View.GONE) {
+                continue
+            }
 
-                if (width + childW + lp.leftMargin + lp.rightMargin + paddingRight > measuredWidth) {
-                    totalHeight += this.verticalDividerSize + rowHeight
-                    rowHeight = 0
-                    width = paddingLeft
-                    row++
+            val lp = v.layoutParams as MarginLayoutParams
+            val childW = v.measuredWidth
+            val childH = v.measuredHeight
 
-                    if (this.maxRows > 0 && row == this.maxRows) {
-                        break
-                    }
+            if (width + childW + lp.leftMargin + lp.rightMargin + paddingRight > measuredWidth) {
+                totalHeight += this.verticalDividerSize + rowHeight
+                rowHeight = 0
+                width = paddingLeft
+                row++
+
+                if (this.maxRows > 0 && row == this.maxRows) {
+                    break
                 }
+            }
 
-                v.layout(width + lp.leftMargin, totalHeight + lp.topMargin,
-                        width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH)
+            v.layout(width + lp.leftMargin, totalHeight + lp.topMargin,
+                    width + lp.leftMargin + childW, totalHeight + lp.topMargin + childH)
 
-                width += this.horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin
+            width += this.horizontalDividerSize + childW + lp.leftMargin + lp.rightMargin
 
-                if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
-                    rowHeight = childH + lp.topMargin + lp.bottomMargin
-                }
+            if (rowHeight < childH + lp.topMargin + lp.bottomMargin) {
+                rowHeight = childH + lp.topMargin + lp.bottomMargin
             }
         }
     }
